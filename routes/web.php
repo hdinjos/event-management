@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+	return view('index');
+});
+
+Route::get('/gal', function () {
+	return view('gal');
 });
