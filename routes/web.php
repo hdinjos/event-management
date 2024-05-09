@@ -24,3 +24,7 @@ Route::get('/events/gal', function () {
 Route::get('/events', function () {
 	return view('dashboard/event');
 });
+
+Route::get('/auth/login', function () {
+	return view('auth/login');
+});
