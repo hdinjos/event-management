@@ -17,6 +17,10 @@ Route::get('/', function () {
 	return view('index');
 });
 
-Route::get('/gal', function () {
+Route::get('/events/gal', function () {
 	return view('gal');
+});
+
+Route::get('/events', function () {
+	return view('dashboard/event');
 });

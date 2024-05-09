@@ -233,20 +233,37 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/events" class="nav-link {{ request()->is('gal') ? 'active' : '' }}">
+                            <a href="/events"
+                                class="nav-link {{ strpos(request()->url(), 'events') ? 'active' : '' }}">
                                 <i class="nav-icon far fa-calendar"></i>
                                 <p>
                                     Events
                                 </p>
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a href="/events" class="nav-link {{ request()->is('gal') ? 'active' : '' }}">
-                                <i class="nav-icon far fa-address-book"></i>
+                            <a href="/report" class="nav-link">
+                                <i class="nav-icon fas fa-book"></i>
                                 <p>
-                                    Participants
+                                    Master Data
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="./index.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Participants</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./index2.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Report v2</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                         <li class="nav-item">
