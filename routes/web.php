@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Authentication;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,5 @@ Route::get('/events', function () {
 	return view('dashboard/event');
 });
 
-Route::get('/auth/login', function () {
-	return view('auth/login');
-});
+Route::get('/auth/login', [Authentication::class, "login_view"]);
+Route::post('/login', [Authentication::class, "login"]);

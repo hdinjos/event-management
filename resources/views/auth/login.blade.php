@@ -29,22 +29,39 @@
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Masuk ke Event Management</p>
 
-                <form class="mb-3" action="../../index3.html" method="post">
+                @if (session('status'))
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                <form class="mb-3" action="/login" method="post">
+                    @csrf
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                            placeholder="Email" value={{ old('email') }}>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
+                        @error('email')
+                            <span class="error invalid-feedback">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Kata Sandi">
+                        <input type="password" name="password"
+                            class="form-control @error('password') is-invalid @enderror" placeholder="Kata Sandi"
+                            value={{ old('password') }}>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
+                        @error('password')
+                            <span class="error invalid-feedback">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="row">
                         <div class="col-8">
