@@ -38,6 +38,9 @@ class Authentication extends Controller
 			}
 
 			if (Hash::check($request->password, $user->password)) {
+				$request->session()->put("id", $user->id);
+				$request->session()->put("name", $user->name);
+				$request->session()->put("email", $user->email);
 				return redirect("/")->with('status', 'Login success');
 			}
 			return redirect("/auth/login")->with("status", "Kredensial tidak valid")->withInput();;
