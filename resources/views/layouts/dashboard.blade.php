@@ -97,7 +97,7 @@
                             <i class="fas fa-id-badge mr-2"></i> Profil
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
+                        <a href="/auth/logout" class="dropdown-item">
                             <i class="fas fa-door-open mr-2"></i> Logout
                         </a>
 

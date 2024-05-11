@@ -41,11 +41,18 @@ class Authentication extends Controller
 				$request->session()->put("id", $user->id);
 				$request->session()->put("name", $user->name);
 				$request->session()->put("email", $user->email);
+				$request->session()->put("role", $user->role);
 				return redirect("/")->with('status', 'Login success');
 			}
 			return redirect("/auth/login")->with("status", "Kredensial tidak valid")->withInput();;
 		} else {
 			return view("/auth/login");
 		}
+	}
+
+	function logout(Request $request)
+	{
+		$request->session()->flush();
+		return redirect("/auth/login")->with("status", "Logout success");
 	}
 }
