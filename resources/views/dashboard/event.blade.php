@@ -122,9 +122,13 @@
     <script>
         $(function() {
             @if (session('alert'))
-                toastr.success({{ session('alert') }});
+                toastr.success('{{ session('alert') }}');
             @endif
-            // toastr.success("wwkkwkwkw");
+
+
+            @if (session('alert-error'))
+                toastr.error('{{ session('alert-error') }}');
+            @endif
 
 
             $('#reservationdate').datetimepicker({

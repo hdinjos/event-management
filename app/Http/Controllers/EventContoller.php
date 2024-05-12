@@ -33,7 +33,7 @@ class EventContoller extends Controller
 		]);
 
 		if ($validator->fails()) {
-			return redirect("/events");
+			return redirect("/events")->with("alert-error", "Form belum lengkap");;
 		}
 		Event::create([
 			"name" => $request->name,
