@@ -84,13 +84,13 @@ class EventContoller extends Controller
 	{
 		//
 		if (!$id) {
-			return redirect("/events");
+			return redirect("/events")->with("alert-error", "Data tidak ditemukan");
 		}
 		$event = Event::find($id);
 		if ($event == NULL) {
-			return redirect("/events");
+			return redirect("/events")->with("alert-error", "Data tidak ditemukan");;
 		}
 		$event->delete();
-		return redirect("/events");
+		return redirect("/events")->with("alert", "Data berhasil dihapus");;
 	}
 }

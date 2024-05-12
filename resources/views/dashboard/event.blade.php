@@ -28,6 +28,7 @@
             </div>
         </div>
 
+        {{-- add modal --}}
         <div class="modal fade" id="modal-default">
             <div class="modal-dialog">
                 <form action="/events" method="post">
@@ -77,6 +78,29 @@
             <!-- /.modal-dialog -->
         </div>
 
+        {{-- delete modal --}}
+        <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteEx" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalDeleteEx">Perhatian</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="m-0">Hapus Data Kegiatan?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="button" onclick="handleDelete()" class="btn btn-primary"
+                            data-dismiss="modal">Ya</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
     <div class="card">
         <div class="card-body">
@@ -99,7 +123,9 @@
                                 <td class="align-middle">{{ $key + 1 }}</td>
                                 <td id="action" class="d-flex flex-column justify-content-start d-md-block">
                                     <a href="/" class="btn btn-primary mb-1 mb-md-0">Edit</a>
-                                    <a href="/events/{{ 10 }}" class="btn btn-danger mb-1 mb-md-0">Hapus</a>
+                                    <button id="delete" value="/events/{{ $e->id }}"
+                                        class="btn btn-danger mb-1 mb-md-0" data-toggle="modal"
+                                        data-target="#modalDelete">Hapus</button>
                                     <a href="/" class="btn btn-warning">Presensi</a>
                                 </td>
                                 <td class="align-middle">{{ $e->name }}</td>
@@ -120,6 +146,10 @@
 @section('js')
     @parent
     <script>
+        function handleDelete() {
+            window.location.replace($("#delete").attr("value"));
+        }
+
         $(function() {
             @if (session('alert'))
                 toastr.success('{{ session('alert') }}');
