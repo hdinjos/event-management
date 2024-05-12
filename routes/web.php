@@ -28,6 +28,7 @@ Route::get('/events/gal', function () {
 Route::get('/events', [EventContoller::class, "index"])->middleware(SessionCheck::class);
 Route::post('/events', [EventContoller::class, "create"])->middleware(SessionCheck::class);
 Route::get('/events/{id}', [EventContoller::class, "destroy"])->middleware(SessionCheck::class);
+Route::get('/events/{id}/edit', [EventContoller::class, "update"])->middleware(SessionCheck::class);
 
 
 Route::get('/auth/login', [Authentication::class, "login_view"]);

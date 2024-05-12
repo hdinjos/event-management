@@ -40,7 +40,7 @@ class EventContoller extends Controller
 			"date" => Carbon::parse(str_replace("/", "-", $request->date))->format("Y-m-d"),
 			"place" => $request->place,
 			"note" => $request->note,
-			"is_active" => $request->is_active === "no" ? false : true,
+			"is_active" => $request->is_active === "on" ? true : false,
 		]);
 		return redirect("/events")->with("alert", "Kegiatan baru telah tersimpan");
 	}
@@ -75,6 +75,33 @@ class EventContoller extends Controller
 	public function update(Request $request, string $id)
 	{
 		//
+		if (!$id) {
+			return redirect("/events")->with("alert-error", "Data tidak ditemukan");
+		}
+		$foundEvent = Event::find($id);
+		if ($foundEvent == NULL) {
+			return redirect("/events")->with("alert-error", "Data tidak ditemukan");
+		}
+
+		$validator = Validator::make($request->all(), [
+			"name" => "required",
+			"date" => "required",
+			"place" => "required",
+			"note" => "required",
+		]);
+
+		if ($validator->fails()) {
+			return redirect("/events")->with("alert-error", "Form belum lengkap");;
+		}
+		var_dump($request->is_active);
+		$foundEvent->update([
+			"name" => $request->name,
+			"date" => Carbon::parse(str_replace("/", "-", $request->date))->format("Y-m-d"),
+			"place" => $request->place,
+			"note" => $request->note,
+			"is_active" => $request->is_active === "on" ? true : false,
+		]);
+		return redirect("/events")->with("alert", "Edit kegiatan berhasil");
 	}
 
 	/**

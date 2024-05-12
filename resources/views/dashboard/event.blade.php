@@ -100,6 +100,55 @@
             </div>
         </div>
 
+        <div class="modal fade" id="modalEdit">
+            <div class="modal-dialog">
+                <form action="" method="get" id="editForm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Kegiatan</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @csrf
+                            <div class="form-group">
+                                <label for="name">Nama</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Masukan Nama">
+                            </div>
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <input type="text" class="form-control datetimepicker-input" name="date"
+                                    data-target="#reservationdate" id="reservationdate" data-toggle="datetimepicker"
+                                    placeholder="Masukan Tanggal" />
+                            </div>
+                            <div class="form-group">
+                                <label for="place">Tempat</label>
+                                <input type="text" class="form-control" id="place" name="place"
+                                    placeholder="Masukan Tempat">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="place">Catatan</label>
+                                <textarea class="form-control" rows="3" id="place" name="note" placeholder="Masukan Catatan"></textarea>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="is_active">
+                                <label class="form-check-label" for="exampleCheck1">Aktifkan Kegiatan</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary toastrDefaultSuccess">Simpan</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
 
     </div>
     <div class="card">
@@ -122,7 +171,8 @@
                             <tr>
                                 <td class="align-middle">{{ $key + 1 }}</td>
                                 <td id="action" class="d-flex flex-column justify-content-start d-md-block">
-                                    <a href="/" class="btn btn-primary mb-1 mb-md-0">Edit</a>
+                                    <button class="btn btn-primary mb-1 mb-md-0" data-toggle="modal"
+                                        data-target="#modalEdit" onclick="setModalEdit({{ $e }})">Edit</button>
                                     <button id="delete" value="/events/{{ $e->id }}"
                                         class="btn btn-danger mb-1 mb-md-0" data-toggle="modal"
                                         data-target="#modalDelete">Hapus</button>
@@ -150,6 +200,16 @@
             window.location.replace($("#delete").attr("value"));
         }
 
+        function setModalEdit(val) {
+            console.log(val);
+            $('input[name="name"]').val(val.name);
+            $('input[name="date"]').val(val.date);
+            $('input[name="place"]').val(val.place);
+            $('textarea[name="note"]').val(val.note);
+            $('input[name="is_active"]').attr("checked", val.is_active ? true : false)
+            $('#editForm').attr("action", "/events/" + val.id + "/edit")
+        }
+
         $(function() {
             @if (session('alert'))
                 toastr.success('{{ session('alert') }}');
@@ -175,11 +235,13 @@
                     $("#th-action").css("width", "235px");
                     $("#action").css("width", "235px");
                 }
-            }
+            };
+
             resize(window);
+
             $(window).on("resize", function(event) {
                 resize(this);
-            })
+            });
 
 
         })
