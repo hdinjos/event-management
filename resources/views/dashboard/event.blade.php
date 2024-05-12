@@ -48,7 +48,8 @@
                             <div class="form-group">
                                 <label>Tanggal</label>
                                 <input type="text" class="form-control datetimepicker-input" name="date"
-                                    data-target="#reservationdate" id="reservationdate" data-toggle="datetimepicker" />
+                                    data-target="#reservationdate" id="reservationdate" data-toggle="datetimepicker"
+                                    placeholder="Masukan Tanggal" />
                             </div>
                             <div class="form-group">
                                 <label for="place">Tempat</label>
@@ -58,21 +59,16 @@
 
                             <div class="form-group">
                                 <label for="place">Catatan</label>
-                                <textarea class="form-control" rows="3" id="place" name="note" placeholder="Enter ..."></textarea>
+                                <textarea class="form-control" rows="3" id="place" name="note" placeholder="Masukan Catatan"></textarea>
                             </div>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1" name="is_active">
                                 <label class="form-check-label" for="exampleCheck1">Aktifkan Kegiatan</label>
                             </div>
-                            <!-- /.card-body -->
-
-                            {{-- <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div> --}}
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-primary toastrDefaultSuccess">Simpan</button>
                         </div>
                     </div>
                 </form>
@@ -103,7 +99,7 @@
                                 <td class="align-middle">{{ $key + 1 }}</td>
                                 <td id="action" class="d-flex flex-column justify-content-start d-md-block">
                                     <a href="/" class="btn btn-primary mb-1 mb-md-0">Edit</a>
-                                    <a href="/" class="btn btn-danger mb-1 mb-md-0">Hapus</a>
+                                    <a href="/events/{{ 10 }}" class="btn btn-danger mb-1 mb-md-0">Hapus</a>
                                     <a href="/" class="btn btn-warning">Presensi</a>
                                 </td>
                                 <td class="align-middle">{{ $e->name }}</td>
@@ -125,6 +121,12 @@
     @parent
     <script>
         $(function() {
+            @if (session('alert'))
+                toastr.success({{ session('alert') }});
+            @endif
+            // toastr.success("wwkkwkwkw");
+
+
             $('#reservationdate').datetimepicker({
                 format: 'L',
                 locale: 'id'
@@ -144,6 +146,8 @@
             $(window).on("resize", function(event) {
                 resize(this);
             })
+
+
         })
     </script>
 @endsection

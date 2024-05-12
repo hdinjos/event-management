@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 
 class EventContoller extends Controller
 {
@@ -23,7 +24,7 @@ class EventContoller extends Controller
 	 */
 	public function create(Request $request)
 	{
-		//
+
 		$validator = Validator::make($request->all(), [
 			"name" => "required",
 			"date" => "required",
@@ -32,17 +33,16 @@ class EventContoller extends Controller
 		]);
 
 		if ($validator->fails()) {
-			$this->index();
+			return redirect("/events");
 		}
-		var_dump($request->is_active);
 		Event::create([
 			"name" => $request->name,
-			"date" => "2024-05-12",
+			"date" => Carbon::parse(str_replace("/", "-", $request->date))->format("Y-m-d"),
 			"place" => $request->place,
 			"note" => $request->note,
-			"is_active" => $request->is_active === "NO",
+			"is_active" => $request->is_active === "no" ? false : true,
 		]);
-		$this->index();
+		return redirect("/events")->with("alert", "Kegiatan baru telah tersimpan");
 	}
 
 	/**
@@ -83,5 +83,14 @@ class EventContoller extends Controller
 	public function destroy(string $id)
 	{
 		//
+		if (!$id) {
+			return redirect("/events");
+		}
+		$event = Event::find($id);
+		if ($event == NULL) {
+			return redirect("/events");
+		}
+		$event->delete();
+		return redirect("/events");
 	}
 }
