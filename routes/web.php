@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication;
+use App\Http\Controllers\EventContoller;
 use App\Http\Middleware\SessionCheck;
 
 
@@ -24,9 +25,9 @@ Route::get('/events/gal', function () {
 	return view('gal');
 });
 
-Route::get('/events', function () {
-	return view('dashboard/event');
-})->middleware(SessionCheck::class);
+Route::get('/events', [EventContoller::class, "index"])->middleware(SessionCheck::class);
+Route::post('/events', [EventContoller::class, "create"])->middleware(SessionCheck::class);
+
 
 Route::get('/auth/login', [Authentication::class, "login_view"]);
 Route::post('/login', [Authentication::class, "login"]);
